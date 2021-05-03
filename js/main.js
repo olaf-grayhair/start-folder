@@ -46,40 +46,45 @@ $('.open-popup').click(function(e) {
   });
 /*---------POPUP------------*/
 
-/*---------MAIL------------*/
-jQuery(document).ready(function () {
-     
-  $(".phone").mask("+380 (99) 999-99-99"); 
- 
-
- jQuery('.send-form').click( function() {
-   var form = jQuery(this).closest('form');
-   
-   if ( form.valid() ) {
-     form.css('opacity','.5');
-     var actUrl = form.attr('action');
-
-     jQuery.ajax({
-       url: actUrl,
-       type: 'post',
-       dataType: 'html',
-       data: form.serialize(),
-       success: function(data) {
-         form.html(data);
-         form.css('opacity','1');
-                 //form.find('.status').html('форма отправлена успешно');
-                 //$('#myModal').modal('show') // для бутстрапа
-       },
-       error:	 function() {
-            form.find('.status').html('серверная ошибка');
-       }
-     });
-   }
- });
-
-
+//**************FORM**************//
+// Отправка заявки 
+$(document).ready(function() {
+	$('#form').submit(function() { // проверка на пустоту заполненных полей. Атрибут html5 — required не подходит (не поддерживается Safari)
+		if (document.form.name.value == '' || document.form.phone.value == '' ) {
+			valid = false;
+			return valid;
+		}
+		$.ajax({
+			type: "POST",
+			url: "mail/mail.php",
+			data: $(this).serialize()
+		}).done(function() {
+			$('.js-overlay-thank-you').fadeIn();
+			$(this).find('input').val('');
+			$('#form').trigger('reset');
+		});
+		return false;
+	});
 });
-/*---------MAIL------------*/
+
+// Закрыть попап «спасибо»
+$('.js-close-thank-you').click(function() { // по клику на крестик
+	$('.js-overlay-thank-you').fadeOut();
+});
+
+$(document).mouseup(function (e) { // по клику вне попапа
+	var popup = $('.popup');
+	if (e.target!=popup[0]&&popup.has(e.target).length === 0){
+		$('.js-overlay-thank-you').fadeOut();
+	}
+});
+
+// Маска ввода номера телефона (плагин maskedinput)
+$(function($){
+	$('[name="phone"]').mask("+7(999) 999-9999");
+});
+
+//**************FORM**************//
 
 
 
