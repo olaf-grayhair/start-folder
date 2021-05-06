@@ -10,6 +10,7 @@
 }
 .body{
     background-color: #1e272e;
+    overflow-x: hidden;
 }
 .container{
     width: 1220px;
@@ -69,7 +70,7 @@
   color: #00CCFF;
 }
 
-.close-popup {
+.close-popup-mail {
 	position: absolute;
 	top: 15px;
 	right: 15px;
@@ -78,7 +79,7 @@
 	cursor: pointer;
 }
 
-.close-popup:before {
+.close-popup-mail:before {
 	content: '';
 	background-color:white;
 	position: absolute;
@@ -89,7 +90,7 @@
 	transform: rotate(-45deg);
 }
 
-.close-popup:after {
+.close-popup-mail:after {
 	content: '';
 	background-color:white;
 	position: absolute;
